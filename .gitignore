@@ -1,0 +1,13 @@
+# raindrops
+
+#add files
+!/proj.android/jni/Android.mk
+
+#remove files
+Raindrops.*
+.cocos-project.json
+/cocosstudio
+/proj.*
+/bin
+/cocos2d
+CMakeLists.txt

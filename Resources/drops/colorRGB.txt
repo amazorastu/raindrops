@@ -1,0 +1,31 @@
+Drop0
+Color3B(255,255,255)
+
+Drop1
+Color3B(164,0,0)
+
+Drop2
+Color3B(9,124,37)
+
+Drop3
+Color3B(243,152,0)
+
+Drop4
+Color3B(0,204,255)
+
+Drop5
+Color3B(172,213,152)
+
+Drop6
+Color3B(241,158,194)
+
+Drop7
+Color3B(89,73,63)
+
+Drop8
+Color3B(0,204,255)
+Color3B(255, 64, 0)
+Color3B(255,196,0)
+Color3B(128, 196, 255)
+Color3B(128, 196, 128)
+Color3B(255, 128, 255)
