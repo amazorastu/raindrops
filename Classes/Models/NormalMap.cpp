@@ -18,8 +18,8 @@ NormalMap::NormalMap(Node* showNode, float w, float h)
 {
 	m_ShowNode = showNode;
 	for (int i = 0; i < m_MapSize; i++)
-	for (int j = 0; j < m_MapSize; j++)
-		map[i][j] = NULL;
+		for (int j = 0; j < m_MapSize; j++)
+			map[i][j] = NULL;
 
 
 	spaceHeight = 190;
@@ -90,7 +90,7 @@ DropsBase* NormalMap::getDrop(int x, int y){
 int NormalMap::isInMap(float touchPositionX, float touchPositionY)
 {
 	int x, y;
-	x = (int)((touchPositionX-startWidth) /( spaceWidth-1) + 0.5f);
+	x = (int)((touchPositionX - startWidth) / (spaceWidth - 1) + 0.5f);
 	if (x < (m_MapSize + 1) * 0.5)
 		y = (int)((touchPositionY - startHeight + spaceHeight*x*0.5f) / spaceHeight + 0.5f);
 	else
@@ -107,7 +107,7 @@ bool NormalMap::isNear(int x1, int y1, int x2, int y2)
 {
 	auto p1 = getDropPos(x1, y1);
 	auto p2 = getDropPos(x2, y2);
-	if (!(x1==x2 && y1==y2) &&
+	if (!(x1 == x2 && y1 == y2) &&
 		map[x1][y1]->getType() == map[x2][y2]->getType() &&
 		abs(p1.x - p2.x) <= spaceWidth*1.5f && abs(p1.y - p2.y) <= spaceWidth*1.5f)
 		return true;
@@ -177,7 +177,7 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 			}
 			else
 			{
-				if (isRound&&x == dropsLinked.top().x && y == dropsLinked.top().y )
+				if (isRound&&x == dropsLinked.top().x && y == dropsLinked.top().y)
 					//if (x == 0 && y == 0)
 				{
 					linesLinked.top()->removeFromParentAndCleanup(true);
@@ -189,7 +189,7 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 			}
 		}
 	}
-	if (dropsLinked.size() > 0 && drawLine &&! isRound)
+	if (dropsLinked.size() > 0 && drawLine &&!isRound)
 	{
 		touchLine->clear();
 		if (map[dropsLinked.top().x][dropsLinked.top().y])
@@ -202,12 +202,8 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 
 	}
 }
-int NormalMap::DragUp(float touchPositionX, float touchPositionY)
+void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 {
-	//debug-p
-	int tempScore = 0;
-
-
 	touchLine->clear();
 	if (dropsLinked.size() == 1)
 	{
@@ -219,9 +215,9 @@ int NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	else if (dropsLinked.size() > 1)
 	{
 		//debug-p
-		tempScore = dropsLinked.size();
-
-
+		m_Score += dropsLinked.size();
+		if (isRound)
+			m_Score += dropsLinked.size();
 		AudioManager::playSoundEffect(SoundEffectClear);
 		while (dropsLinked.size() != 0)
 		{
@@ -244,6 +240,10 @@ int NormalMap::DragUp(float touchPositionX, float touchPositionY)
 		isRound = false;
 		touchLine->runAction(Show::create());
 	}
-	//debug-p
-	return tempScore;
+}
+void NormalMap::clearScore(){
+	m_Score = 0;
+}
+int NormalMap::getScore(){
+	return m_Score;
 }

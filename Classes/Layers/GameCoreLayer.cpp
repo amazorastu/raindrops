@@ -31,8 +31,8 @@ void GameCoreLayer::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event*){
 
 	//debug
 	int tempScore;
-	tempScore = map->DragUp(touch->getLocation().x, touch->getLocation().y);
-	((GameLayer*)this->getParent())->setScore(((GameLayer*)this->getParent())->getScore() + tempScore);
+	map->DragUp(touch->getLocation().x, touch->getLocation().y);
+	((GameLayer*)this->getParent())->setScore(map->getScore());
 
 }
 void GameCoreLayer::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event*){

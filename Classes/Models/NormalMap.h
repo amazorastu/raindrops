@@ -20,7 +20,7 @@ private:
 	std::stack<intPoint> dropsLinked;
 	std::stack<cocos2d::DrawNode*> linesLinked;
 	cocos2d::DrawNode* touchLine;
-
+	int m_Score=0;
 	float spaceHeight;
 	float spaceWidth;
 	float startHeight;
@@ -42,6 +42,8 @@ public:
 	int isInMap(float, float);
 	bool isNear(int x1, int y1, int x2, int y2);
 	void DragOn(float, float);
-	int DragUp(float, float);
+	void DragUp(float, float);
 	float getHalfMaxWidth();
+	void clearScore();
+	int getScore();
 };
