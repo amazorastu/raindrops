@@ -5,7 +5,8 @@
 
 enum SoundEffectName
 {
-	SoundEffectClear = 1
+	SoundEffectClear = 1,
+	SoundEffectRound = 2
 };
 
 class AudioManager

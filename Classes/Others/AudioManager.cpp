@@ -10,9 +10,12 @@ void AudioManager::playSoundEffect(SoundEffectName pName)
 	{
 	case SoundEffectClear:
 		sprintf(soundEffectPath, "se/Clear%d.wav", random(0, 2));
-		SimpleAudioEngine::getInstance()->playEffect(soundEffectPath);
+		break;
+	case SoundEffectRound:
+		sprintf(soundEffectPath, "se/Round.wav");
 		break;
 	default:
 		break;
 	}
+	SimpleAudioEngine::getInstance()->playEffect(soundEffectPath);
 }

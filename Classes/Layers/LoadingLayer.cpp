@@ -22,7 +22,7 @@ Scene* LoadingLayer::createScene()
 
 bool LoadingLayer::init()
 {
-	if (!LayerColor::initWithColor(Color4B(230, 255, 255, 255)))
+	if (!LayerColor::initWithColor(Color4B(255, 200, 145, 255)))
 	{
 		return false;
 	}

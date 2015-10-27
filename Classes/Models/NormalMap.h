@@ -26,7 +26,9 @@ private:
 	float startHeight;
 	float startWidth;
 
-	bool isRound=false;
+	bool isRound = false;
+	cocos2d::Color4B currentColor;
+
 	cocos2d::Action* creatDropAnimation(cocos2d::Point targetPoint, float height);
 public:
 	NormalMap(cocos2d::Node* showNode, float w, float h);
@@ -46,4 +48,6 @@ public:
 	float getHalfMaxWidth();
 	void clearScore();
 	int getScore();
+	bool getIsRound();
+	cocos2d::Color4B getCurrentColor();
 };

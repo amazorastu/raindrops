@@ -34,7 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	if (!glview) {
-		glview = GLViewImpl::createWithRect("RainDrops", Rect(0, 0, 540, 700));
+		glview = GLViewImpl::createWithRect("RainDrops", Rect(0, 0, 540, 720));
 		director->setOpenGLView(glview);
 	}
 	glview->setDesignResolutionSize(2048.0f*director->getWinSize().width / director->getWinSize().height, 2048.0f, ResolutionPolicy::SHOW_ALL);

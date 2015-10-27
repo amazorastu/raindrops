@@ -30,6 +30,8 @@ NormalMap::NormalMap(Node* showNode, float w, float h)
 
 	touchLine = DrawNode::create();
 	showNode->addChild(touchLine, 2);
+
+	currentColor = Color4B::WHITE;
 }
 
 void NormalMap::fillMap()
@@ -141,7 +143,7 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 					{
 						auto node = DrawNode::create();
 						node->drawSegment(getDropPos(x, y), getDropPos(dropsLinked.top().x, dropsLinked.top().y),
-							8.0f, ccc4FFromccc4B(map[x][y]->getColor()));
+							8.0f, Color4F(map[x][y]->getColor()));
 						linesLinked.push(node);
 						m_ShowNode->addChild(node, 2);
 						dropsLinked.push(pt);
@@ -165,9 +167,10 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 
 							auto node = DrawNode::create();
 							node->drawSegment(getDropPos(x, y), getDropPos(dropsLinked.top().x, dropsLinked.top().y),
-								8.0f, ccc4FFromccc4B(map[x][y]->getColor()));
+								8.0f, Color4F(map[x][y]->getColor()));
 							linesLinked.push(node);
 							m_ShowNode->addChild(node, 2);
+							currentColor = map[tmp.x][tmp.y]->getColor();
 							isRound = true;//回路
 							touchLine->runAction(Hide::create());
 							drawLine = false;
@@ -196,7 +199,7 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 		{
 			touchLine->drawSegment(getDropPos(dropsLinked.top().x, dropsLinked.top().y),
 				Point(touchPositionX, touchPositionY),
-				8.0f, ccc4FFromccc4B(map[dropsLinked.top().x][dropsLinked.top().y]->getColor()));
+				8.0f, Color4F(map[dropsLinked.top().x][dropsLinked.top().y]->getColor()));
 
 		}
 
@@ -204,6 +207,7 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 }
 void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 {
+	currentColor = Color4B::WHITE;
 	touchLine->clear();
 	if (dropsLinked.size() == 1)
 	{
@@ -237,10 +241,21 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	}
 	if (isRound)
 	{
+		currentColor = Color4B::WHITE;
 		isRound = false;
 		touchLine->runAction(Show::create());
 	}
 }
+
+bool NormalMap::getIsRound()
+{
+	return isRound;
+}
+Color4B NormalMap::getCurrentColor()
+{
+	return currentColor;
+}
+
 void NormalMap::clearScore(){
 	m_Score = 0;
 }
