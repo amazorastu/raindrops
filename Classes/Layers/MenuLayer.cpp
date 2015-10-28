@@ -27,9 +27,17 @@ bool MenuLayer::init()
 		return false;
 	}
 
-	logo = Sprite::createWithSpriteFrameName("Logo.png");
+
+	//create logo -p
+	logo = Sprite::create();
 	logo->setPosition(Global::getPointCenter());
 	this->addChild(logo);
+	if (Global::getLanguage() == LanguageType::CHINESE)
+	{
+		logo->setSpriteFrame("Logo_chs.png");
+	}
+	else logo->setSpriteFrame("Logo_eng.png");
+	
 
 	button[0] = MenuItemImage::create("", "", CC_CALLBACK_1(MenuLayer::buttonCallback, this));
 	button[1] = MenuItemImage::create("", "", CC_CALLBACK_1(MenuLayer::buttonCallback, this));
