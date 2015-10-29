@@ -207,8 +207,6 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 }
 void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 {
-	currentColor = Color4B::WHITE;
-	touchLine->clear();
 	if (dropsLinked.size() == 1)
 	{
 		if (map[dropsLinked.top().x][dropsLinked.top().y])
@@ -241,9 +239,32 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	}
 	if (isRound)
 	{
-		currentColor = Color4B::WHITE;
+		this->clearColor();
+		this->dropDown();
+		this->fillMap();
 		isRound = false;
 		touchLine->runAction(Show::create());
+	}
+
+	currentColor = Color4B::WHITE;
+	touchLine->clear();
+}
+
+void NormalMap::clearColor()
+{
+	for (int i = 0; i < m_MapSize; i++)
+	{
+		for (int j = 0; j < m_MapSize; j++)
+		{
+			if (map[i][j] == nullptr)continue;
+
+			if ((Color3B)map[i][j]->getColor()==(Color3B)currentColor)
+			{
+				map[i][j]->remove();
+				map[i][j] = nullptr;
+				m_Score += 2;
+			}
+		}
 	}
 }
 

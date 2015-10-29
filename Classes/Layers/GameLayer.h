@@ -4,7 +4,7 @@
 
 #include "Others/Global.h"
 #include "Layers/MenuLayer.h"
-#include "Layers/GameCoreLayer.h"
+#include "Models/NormalMap.h"
 
 class GameLayer : public cocos2d::LayerColor
 {
@@ -31,11 +31,32 @@ public:
 
 private:
 	virtual void onEnterTransitionDidFinish();
+	NormalMap* map;
+	cocos2d::EventListenerTouchOneByOne* eventTouch;
+	cocos2d::EventDispatcher* dispatcher;
 
+	void addButtonEvents();
+	void addKeyBoardEvents();
+
+	virtual bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);
+	virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event*);
+	virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event*);
+	virtual void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event*);
+	
+	void buttonCallback(cocos2d::Ref*);
+
+	bool isPaused;
+	bool isTouched;
 	bool isTimerOn;
+
+	void showDialog();
+	void hideDialog();
+	cocos2d::LayerColor *dialog;
 
 	cocos2d::Sprite *dockUp;
 	cocos2d::Sprite *dockDown;
+
+	cocos2d::Sprite *background;
 
 	cocos2d::Label *scoreLabel;
 	cocos2d::Label *lifeLabel;

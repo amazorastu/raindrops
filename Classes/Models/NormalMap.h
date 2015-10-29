@@ -49,5 +49,6 @@ public:
 	void clearScore();
 	int getScore();
 	bool getIsRound();
+	void clearColor();
 	cocos2d::Color4B getCurrentColor();
 };

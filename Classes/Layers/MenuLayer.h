@@ -23,7 +23,7 @@ private:
 	void buttonCallback(cocos2d::Ref*);
 	virtual void onEnterTransitionDidFinish();
 
-	
+	bool isActive;
 
 	void showMenu();
 	void hideMenu();

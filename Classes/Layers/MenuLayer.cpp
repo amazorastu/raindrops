@@ -2,7 +2,7 @@
 
 USING_NS_CC;
 
-MenuLayer::MenuLayer()
+MenuLayer::MenuLayer() : isActive(false)
 {
 
 }
@@ -27,9 +27,17 @@ bool MenuLayer::init()
 		return false;
 	}
 
-	logo = Sprite::createWithSpriteFrameName("Logo.png");
+
+	//create logo -p
+	logo = Sprite::create();
 	logo->setPosition(Global::getPointCenter());
 	this->addChild(logo);
+	if (Global::getLanguage() == LanguageType::CHINESE)
+	{
+		logo->setSpriteFrame("Logo_chs.png");
+	}
+	else logo->setSpriteFrame("Logo_eng.png");
+	
 
 	button[0] = MenuItemImage::create("", "", CC_CALLBACK_1(MenuLayer::buttonCallback, this));
 	button[1] = MenuItemImage::create("", "", CC_CALLBACK_1(MenuLayer::buttonCallback, this));
@@ -52,6 +60,10 @@ bool MenuLayer::init()
 	button[1]->setPosition(Vec2(Global::getWinSizeX(), 800.0f));
 	button[2]->setPosition(Vec2(-Global::getWinSizeX(), -800.0f));
 	button[3]->setPosition(Vec2(Global::getWinSizeX(), -800.0f));
+	for (int i = 0; i < 4; i++)
+	{
+		button[i]->setOpacity(0.0f);
+	}
 
 
 	menu = Menu::create(button[0], button[1], button[2], button[3], nullptr);
@@ -86,6 +98,7 @@ bool MenuLayer::init()
 
 void MenuLayer::onEnterTransitionDidFinish()
 {
+	isActive = true;
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyReleased = CC_CALLBACK_2(MenuLayer::onKeyReleased, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
@@ -104,6 +117,7 @@ void MenuLayer::showMenu()
 	button[3]->runAction(EaseBackOut::create(MoveTo::create(0.6f, Vec2(250.0f, -250.0f))));
 	for (int i = 0; i < 4; i++)
 	{
+		button[i]->runAction(FadeIn::create(0.4f));
 		label[i]->runAction(Sequence::create(DelayTime::create(0.6f), FadeIn::create(1.0f), nullptr));
 	}
 }
@@ -118,6 +132,7 @@ void MenuLayer::hideMenu()
 	button[3]->runAction(EaseBackIn::create(MoveTo::create(0.4f, Vec2(Global::getWinSizeX(), -800.0f))));
 	for (int i = 0; i < 4; i++)
 	{
+		button[i]->runAction(Sequence::create(DelayTime::create(0.2f), FadeOut::create(0.15f), nullptr));
 		label[i]->stopAllActions();
 		label[i]->runAction(FadeOut::create(0.3f));
 	}
@@ -125,16 +140,19 @@ void MenuLayer::hideMenu()
 
 void MenuLayer::buttonCallback(Ref *ref)
 {
+	if(isActive == false)return;
+	isActive = false;
 	this->hideMenu();
 	auto b = (MenuItemImage*)ref;
 	if (b == button[0])
 	{
 		this->runAction(
-			Sequence::create(DelayTime::create(0.6f),
+			Sequence::create(DelayTime::create(0.5f),
 			CallFunc::create([&]{
 				Director::getInstance()->pushScene(
 					TransitionCrossFade::create(0.1f, GameLayer::createScene())); }
-		),nullptr)); }
+		),nullptr)); 
+	}
 	else if (b == button[1]){}
 	else if (b == button[2]){}
 	else if (b == button[3]){}
