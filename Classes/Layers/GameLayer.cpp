@@ -193,9 +193,10 @@ void GameLayer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * pEvent)
 				Director::getInstance()->replaceScene(
 				TransitionCrossFade::create(1.0f, MenuLayer::createScene())); }), 
 				nullptr));*/
-		this->runAction(
+		Director::getInstance()->popScene();
+		/*this->runAction(
 			Sequence::create(DelayTime::create(0.0f),
 			CallFunc::create([&]{
-			Director::getInstance()->popScene(); }),nullptr));
+			Director::getInstance()->popScene(); }),nullptr));*/
 	}
 }
