@@ -2,7 +2,8 @@
 
 USING_NS_CC;
 
-GameLayer::GameLayer() : score(0), life(0), scoreShown(0), lifeShown(0), isTimerOn(false), isTouched(false)
+GameLayer::GameLayer() : score(0), life(0), scoreShown(0), lifeShown(0), isTimerOn(false), isTouched(false),
+isPaused(false)
 {
 
 }
@@ -178,13 +179,16 @@ void GameLayer::update(float dt)
 
 void GameLayer::showDialog()
 {
+	if (!isPaused)isPaused = true;
+	else return;
+
 	this->unscheduleUpdate();
 	dispatcher->removeEventListener(eventTouch);
 
 	dialog = LayerColor::create(Color4B(0.0f, 0.0f, 0.0f, 128.0f));
 	dialog->setOpacity(0.0f);
 	this->addChild(dialog, 6);
-	dialog->runAction(FadeTo::create(0.3f, 128.0f));
+	dialog->runAction(FadeTo::create(0.15f, 128.0f));
 
 	auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("Button5.png");
 	auto b1 = MenuItemImage::create("", "", CC_CALLBACK_1(GameLayer::buttonCallback, this));
@@ -193,7 +197,7 @@ void GameLayer::showDialog()
 	b1->setPosition(-300.0f, 0.0f);
 	b1->setTag(1);
 	b1->setOpacity(0.0f);
-	b1->runAction(FadeIn::create(0.4f));
+	b1->runAction(FadeIn::create(0.2f));
 
 	frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("Button4.png");
 	auto b2 = MenuItemImage::create("", "", CC_CALLBACK_1(GameLayer::buttonCallback, this));
@@ -202,7 +206,7 @@ void GameLayer::showDialog()
 	b2->setPosition(300.0f, 0.0f);
 	b2->setTag(2);
 	b2->setOpacity(0.0f);
-	b2->runAction(FadeIn::create(0.4f));
+	b2->runAction(FadeIn::create(0.2f));
 
 	auto m = Menu::create(b1, b2, nullptr);
 	m->setPosition(Global::getPointCenter());
@@ -210,6 +214,7 @@ void GameLayer::showDialog()
 }
 void GameLayer::hideDialog()
 {
+	isPaused = false;
 	this->scheduleUpdate();
 	this->addButtonEvents();
 

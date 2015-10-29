@@ -45,6 +45,7 @@ private:
 	
 	void buttonCallback(cocos2d::Ref*);
 
+	bool isPaused;
 	bool isTouched;
 	bool isTimerOn;
 
