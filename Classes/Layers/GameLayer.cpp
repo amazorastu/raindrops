@@ -211,6 +211,18 @@ void GameLayer::showDialog()
 	auto m = Menu::create(b1, b2, nullptr);
 	m->setPosition(Global::getPointCenter());
 	dialog->addChild(m, 2);
+
+	auto l1 = TextBase::createText(textTypeHome);
+	l1->setPosition(Global::getPointCenter() + Vec2(-300.0f, -190.0f));
+	l1->setOpacity(0.0f);
+	dialog->addChild(l1, 3);
+	l1->runAction(FadeIn::create(0.2f));
+
+	auto l2 = TextBase::createText(textTypeContinue);
+	l2->setPosition(Global::getPointCenter() + Vec2(300.0f, -190.0f));
+	l2->setOpacity(0.0f);
+	dialog->addChild(l2, 3);
+	l2->runAction(FadeIn::create(0.2f));
 }
 void GameLayer::hideDialog()
 {

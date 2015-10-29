@@ -22,6 +22,12 @@ Label* TextBase::createText(TextType textType)
 		case textTypeShop:
 			lb->setString("商店");
 			break;
+		case textTypeHome:
+			lb->setString("菜单");
+			break;
+		case textTypeContinue:
+			lb->setString("继续");
+			break;
 		default:
 			break;
 		}
@@ -34,13 +40,19 @@ Label* TextBase::createText(TextType textType)
 			lb->setString("Challenge");
 			break;
 		case textTypeZen:
-			lb->setString("Zen");
+			lb->setString("Relax");
 			break;
 		case textTypeAchievement:
 			lb->setString("Achievement");
 			break;
 		case textTypeShop:
 			lb->setString("Shop");
+			break;
+		case textTypeHome:
+			lb->setString("Home");
+			break;
+		case textTypeContinue:
+			lb->setString("Continue");
 			break;
 		default:
 			break;

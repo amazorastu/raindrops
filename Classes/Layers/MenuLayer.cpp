@@ -22,7 +22,7 @@ Scene* MenuLayer::createScene()
 
 bool MenuLayer::init()
 {
-	if (!LayerColor::initWithColor(Color4B(255, 200, 145, 255)))
+	if (!LayerColor::initWithColor(Color4B(255, 225, 200, 255)))
 	{
 		return false;
 	}
@@ -30,7 +30,7 @@ bool MenuLayer::init()
 
 	//create logo -p
 	logo = Sprite::create();
-	logo->setPosition(Global::getPointCenter());
+	logo->setPosition(Global::getWinSizeHalfX(), Global::getWinSizeHalfY()*1.2f);
 	this->addChild(logo);
 	if (Global::getLanguage() == LanguageType::CHINESE)
 	{

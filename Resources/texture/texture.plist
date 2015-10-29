@@ -7,7 +7,7 @@
             <key>Button0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{601,606},{300,300}}</string>
+                <string>{{303,1511},{300,300}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -20,7 +20,7 @@
             <key>Button1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{299,606},{300,300}}</string>
+                <string>{{304,1209},{300,300}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>Button2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{601,304},{300,300}}</string>
+                <string>{{2,1209},{300,300}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,7 +46,7 @@
             <key>Button3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{299,304},{300,300}}</string>
+                <string>{{303,907},{300,300}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,7 +59,7 @@
             <key>Button4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{601,2},{300,300}}</string>
+                <string>{{303,605},{300,300}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>Button5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{299,2},{300,300}}</string>
+                <string>{{303,303},{300,300}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>Dock.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{1536,200}}</string>
+                <string>{{735,2},{1536,200}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,28 +98,28 @@
             <key>Logo_chs.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{187,1540},{389,110}}</string>
+                <string>{{2,1540},{389,299}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{389,110}}</string>
+                <string>{{0,0},{389,299}}</string>
                 <key>sourceSize</key>
-                <string>{389,110}</string>
+                <string>{389,299}</string>
             </dict>
             <key>Logo_eng.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1540},{411,183}}</string>
+                <string>{{2,2},{731,299}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{411,183}}</string>
+                <string>{{0,0},{731,299}}</string>
                 <key>sourceSize</key>
-                <string>{411,183}</string>
+                <string>{731,299}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -131,7 +131,7 @@
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:89b1752d7b05dab342a6be2635f95227:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:daf1b3d9fb01dabbdd4654ba7e178765:1/1$</string>
             <key>textureFileName</key>
             <string>texture.png</string>
         </dict>

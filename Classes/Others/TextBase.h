@@ -9,7 +9,9 @@ enum TextType
 	textTypeChallenge = 1,
 	textTypeZen = 2,
 	textTypeAchievement = 3,
-	textTypeShop = 4
+	textTypeShop = 4,
+	textTypeHome = 5,
+	textTypeContinue = 6
 };
 
 
