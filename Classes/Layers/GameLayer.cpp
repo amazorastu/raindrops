@@ -179,8 +179,8 @@ void GameLayer::update(float dt)
 
 void GameLayer::showDialog()
 {
-	if (!isPaused)isPaused = true;
-	else return;
+	if (isPaused || isTouched)return;
+	else isPaused = true;
 
 	this->unscheduleUpdate();
 	dispatcher->removeEventListener(eventTouch);
@@ -270,6 +270,10 @@ void GameLayer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * pEvent)
 			Sequence::create(DelayTime::create(0.0f),
 			CallFunc::create([&]{
 			Director::getInstance()->popScene(); }),nullptr));*/
-		this->showDialog();
+		if (!isPaused)
+		{
+			this->showDialog();
+		}
+		else this->hideDialog();
 	}
 }
