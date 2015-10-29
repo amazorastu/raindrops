@@ -35,14 +35,22 @@ private:
 	cocos2d::EventListenerTouchOneByOne* eventTouch;
 	cocos2d::EventDispatcher* dispatcher;
 
+	void addButtonEvents();
+	void addKeyBoardEvents();
+
 	virtual bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);
 	virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event*);
 	virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event*);
 	virtual void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event*);
+	
+	void buttonCallback(cocos2d::Ref*);
+
 	bool isTouched;
-
-
 	bool isTimerOn;
+
+	void showDialog();
+	void hideDialog();
+	cocos2d::LayerColor *dialog;
 
 	cocos2d::Sprite *dockUp;
 	cocos2d::Sprite *dockDown;

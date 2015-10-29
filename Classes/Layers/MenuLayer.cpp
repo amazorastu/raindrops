@@ -132,7 +132,7 @@ void MenuLayer::hideMenu()
 	button[3]->runAction(EaseBackIn::create(MoveTo::create(0.4f, Vec2(Global::getWinSizeX(), -800.0f))));
 	for (int i = 0; i < 4; i++)
 	{
-		button[i]->runAction(Sequence::create(DelayTime::create(0.2f), FadeOut::create(0.2f), nullptr));
+		button[i]->runAction(Sequence::create(DelayTime::create(0.2f), FadeOut::create(0.15f), nullptr));
 		label[i]->stopAllActions();
 		label[i]->runAction(FadeOut::create(0.3f));
 	}

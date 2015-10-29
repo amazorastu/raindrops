@@ -71,17 +71,9 @@ void GameLayer::onEnterTransitionDidFinish()
 	this->setTimeAsLife(3600);
 	//this->setMovesAsLife(30);
 
-	auto listener = EventListenerKeyboard::create();
-	listener->onKeyReleased = CC_CALLBACK_2(GameLayer::onKeyReleased, this);
-	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
-
-	eventTouch = EventListenerTouchOneByOne::create();
-	eventTouch->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan, this);
-	eventTouch->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
-	eventTouch->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
-	eventTouch->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
-	dispatcher = Director::getInstance()->getEventDispatcher();
-	dispatcher->addEventListenerWithSceneGraphPriority(eventTouch, this);
+	
+	this->addKeyBoardEvents();
+	this->addButtonEvents();
 
 
 	map = new NormalMap(this, Global::getWinSizeX(), Global::getWinSizeY());
@@ -89,6 +81,24 @@ void GameLayer::onEnterTransitionDidFinish()
 
 	//this->schedule(SEL_SCHEDULE(&GameLayer::update));
 	this->scheduleUpdate();
+}
+
+void GameLayer::addButtonEvents()
+{
+	eventTouch = EventListenerTouchOneByOne::create();
+	eventTouch->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan, this);
+	eventTouch->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
+	eventTouch->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
+	eventTouch->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
+	dispatcher = Director::getInstance()->getEventDispatcher();
+	dispatcher->addEventListenerWithSceneGraphPriority(eventTouch, this);
+}
+void GameLayer::addKeyBoardEvents()
+{
+	auto listener = EventListenerKeyboard::create();
+	listener->onKeyReleased = CC_CALLBACK_2(GameLayer::onKeyReleased, this);
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
 }
 
 bool GameLayer::onTouchBegan(Touch *touch, Event*){
@@ -166,6 +176,63 @@ void GameLayer::update(float dt)
 
 }
 
+void GameLayer::showDialog()
+{
+	this->unscheduleUpdate();
+	dispatcher->removeEventListener(eventTouch);
+
+	dialog = LayerColor::create(Color4B(0.0f, 0.0f, 0.0f, 128.0f));
+	dialog->setOpacity(0.0f);
+	this->addChild(dialog, 6);
+	dialog->runAction(FadeTo::create(0.3f, 128.0f));
+
+	auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("Button5.png");
+	auto b1 = MenuItemImage::create("", "", CC_CALLBACK_1(GameLayer::buttonCallback, this));
+	b1->setNormalSpriteFrame(frame);
+	b1->setSelectedSpriteFrame(frame);
+	b1->setPosition(-300.0f, 0.0f);
+	b1->setTag(1);
+	b1->setOpacity(0.0f);
+	b1->runAction(FadeIn::create(0.4f));
+
+	frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("Button4.png");
+	auto b2 = MenuItemImage::create("", "", CC_CALLBACK_1(GameLayer::buttonCallback, this));
+	b2->setNormalSpriteFrame(frame);
+	b2->setSelectedSpriteFrame(frame);
+	b2->setPosition(300.0f, 0.0f);
+	b2->setTag(2);
+	b2->setOpacity(0.0f);
+	b2->runAction(FadeIn::create(0.4f));
+
+	auto m = Menu::create(b1, b2, nullptr);
+	m->setPosition(Global::getPointCenter());
+	dialog->addChild(m, 2);
+}
+void GameLayer::hideDialog()
+{
+	this->scheduleUpdate();
+	this->addButtonEvents();
+
+	this->removeChild(dialog, true);
+}
+
+void GameLayer::buttonCallback(Ref* ref)
+{
+	auto button = (MenuItemImage*)ref;
+
+	switch (button->getTag())
+	{
+	case 1:
+		Director::getInstance()->popScene();
+		break;
+	case 2:
+		this->hideDialog();
+		break;
+	default:
+		break;
+	}
+}
+
 void GameLayer::setScore(int para)
 {
 	score = para;
@@ -193,10 +260,11 @@ void GameLayer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * pEvent)
 				Director::getInstance()->replaceScene(
 				TransitionCrossFade::create(1.0f, MenuLayer::createScene())); }), 
 				nullptr));*/
-		Director::getInstance()->popScene();
+		//Director::getInstance()->popScene();
 		/*this->runAction(
 			Sequence::create(DelayTime::create(0.0f),
 			CallFunc::create([&]{
 			Director::getInstance()->popScene(); }),nullptr));*/
+		this->showDialog();
 	}
 }
