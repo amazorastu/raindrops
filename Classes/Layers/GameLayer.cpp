@@ -2,7 +2,7 @@
 
 USING_NS_CC;
 
-GameLayer::GameLayer() : score(0), life(0), scoreShown(0), lifeShown(0), isTimerOn(false)
+GameLayer::GameLayer() : score(0), life(0), scoreShown(0), lifeShown(0), isTimerOn(false), isTouched(false)
 {
 
 }
@@ -48,8 +48,18 @@ bool GameLayer::init()
 	lifeLabel->setTextColor(Color4B::BLACK);
 	dockUp->addChild(lifeLabel, 5);
 
-	auto coreLayer = new GameCoreLayer();
-	this->addChild(coreLayer);
+
+	background = Sprite::create("Background.png");
+	background->setPosition(Global::getPointCenter());
+	background->setOpacity(50.0f);
+	this->addChild(background);
+
+	
+
+
+
+
+
 	return true;
 }
 
@@ -65,8 +75,39 @@ void GameLayer::onEnterTransitionDidFinish()
 	listener->onKeyReleased = CC_CALLBACK_2(GameLayer::onKeyReleased, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+	eventTouch = EventListenerTouchOneByOne::create();
+	eventTouch->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan, this);
+	eventTouch->onTouchMoved = CC_CALLBACK_2(GameLayer::onTouchMoved, this);
+	eventTouch->onTouchEnded = CC_CALLBACK_2(GameLayer::onTouchEnded, this);
+	eventTouch->onTouchCancelled = CC_CALLBACK_2(GameLayer::onTouchCancelled, this);
+	dispatcher = Director::getInstance()->getEventDispatcher();
+	dispatcher->addEventListenerWithSceneGraphPriority(eventTouch, this);
+
+
+	map = new NormalMap(this, Global::getWinSizeX(), Global::getWinSizeY());
+	map->fillMap();
+
 	//this->schedule(SEL_SCHEDULE(&GameLayer::update));
 	this->scheduleUpdate();
+}
+
+bool GameLayer::onTouchBegan(Touch *touch, Event*){
+	if (isTouched)return false;
+	isTouched = true;
+	return true;
+}
+void GameLayer::onTouchEnded(Touch *touch, Event*){
+
+	map->DragUp(touch->getLocation().x, touch->getLocation().y);
+	this->setScore(map->getScore());
+	isTouched = false;
+
+}
+void GameLayer::onTouchMoved(Touch *touch, Event*){
+	map->DragOn(touch->getLocation().x, touch->getLocation().y);
+}
+void GameLayer::onTouchCancelled(Touch *touch, Event*){
+	isTouched = false;
 }
 
 void GameLayer::setTimeAsLife(int time)
@@ -85,10 +126,23 @@ void GameLayer::setMovesAsLife(int moves)
 
 void GameLayer::update(float dt)
 {
+	if (map->getIsRound())
+	{
+		if (Color3B(map->getCurrentColor()) != background->getColor())
+		{
+			AudioManager::playSoundEffect(SoundEffectRound);
+			background->setColor(Color3B(map->getCurrentColor()));
+		}
+	}
+	else background->setColor(Color3B::WHITE);
+
+
+
 	if (isTimerOn)
 	{
 		life--;
 		lifeShown = life / 60 + 1;
+		if(life <= 0)lifeShown=0;
 	}
 	else
 	{
@@ -105,6 +159,7 @@ void GameLayer::update(float dt)
 	if (lifeShown == 0)
 	{
 		this->unscheduleUpdate();
+		Director::getInstance()->popScene();
 		//this->unschedule(SEL_SCHEDULE(&GameLayer::update));
 		//todo
 	}

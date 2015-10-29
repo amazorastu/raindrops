@@ -2,7 +2,7 @@
 
 USING_NS_CC;
 
-MenuLayer::MenuLayer()
+MenuLayer::MenuLayer() : isActive(false)
 {
 
 }
@@ -94,6 +94,7 @@ bool MenuLayer::init()
 
 void MenuLayer::onEnterTransitionDidFinish()
 {
+	isActive = true;
 	auto listener = EventListenerKeyboard::create();
 	listener->onKeyReleased = CC_CALLBACK_2(MenuLayer::onKeyReleased, this);
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
@@ -133,12 +134,14 @@ void MenuLayer::hideMenu()
 
 void MenuLayer::buttonCallback(Ref *ref)
 {
+	if(isActive = false)return;
+	isActive = false;
 	this->hideMenu();
 	auto b = (MenuItemImage*)ref;
 	if (b == button[0])
 	{
 		this->runAction(
-			Sequence::create(DelayTime::create(0.6f),
+			Sequence::create(DelayTime::create(0.5f),
 			CallFunc::create([&]{
 				Director::getInstance()->pushScene(
 					TransitionCrossFade::create(0.1f, GameLayer::createScene())); }
