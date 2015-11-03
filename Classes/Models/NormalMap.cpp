@@ -10,10 +10,12 @@ Action* NormalMap::creatDropAnimation(Point targetPoint, float height)
 		JumpTo::create(0.05f, targetPoint, height*0.02f > 5.0f ? height*0.02 : 5.0f, 1),
 		nullptr);
 }
+
 float NormalMap::getHalfMaxWidth()
 {
 	return spaceWidth * (m_MapSize + 1)*0.5f;
 }
+
 NormalMap::NormalMap(Node* showNode, float w, float h)
 {
 	m_ShowNode = showNode;
@@ -80,24 +82,83 @@ void NormalMap::dropDown()
 
 Point NormalMap::getDropPos(int x, int y)
 {
-	if (x < (m_MapSize + 1) * 0.5)
+	if (x < (m_MapSize + 1) / 2)
 		return Point(x* spaceWidth + startWidth, startHeight - spaceHeight* x*0.5f + spaceHeight* y);
 	else
 		return Point(x* spaceWidth + startWidth, startHeight - spaceHeight*0.5f* (m_MapSize - 1 - x) + spaceHeight* y);
 }
+
 DropsBase* NormalMap::getDrop(int x, int y){
 	return map[x][y];
+}
+
+bool NormalMap::isInMap(int x, int y)
+{
+	if (x >= m_MapSize || y >= m_MapSize || x < 0 || y < 0 || !map[x][y]) return false;
+	return true;
+}
+
+intPoint NormalMap::getDropByDirect(int x, int y, int d)
+{
+	intPoint p;p.x = -1;p.y = -1;
+	switch (d)
+	{
+	case 1://方向上
+		p.x = x; p.y = y + 1;
+		if (!isInMap(p.x,p.y))break;
+		return p;
+	case 2://方向右上
+		if (x < m_MapSize / 2){
+			p.x = x + 1; p.y = y + 1;
+		}
+		else{
+			p.x = x + 1; p.y = y;
+		}
+		if (!isInMap(p.x, p.y))break;
+		return p;
+	case 3://方向右下
+		if (x < m_MapSize / 2){
+			p.x = x + 1; p.y = y;
+		}
+		else{
+			p.x = x + 1; p.y = y - 1;
+		}
+		if (!isInMap(p.x, p.y))break;
+		return p;
+	case 4://方向下
+		p.x = x; p.y = y - 1;
+		if (!isInMap(p.x, p.y))break;
+		return p;
+	case 5://方向左下
+		if (x < m_MapSize / 2){
+			p.x = x - 1; p.y = y - 1;
+		}
+		else{
+			p.x = x - 1; p.y = y;
+		}
+		break;
+	case 6://方向左上
+		if (x < m_MapSize / 2){
+			p.x = x - 1; p.y = y;
+		}
+		else{
+			p.x = x - 1; p.y = y + 1;
+		}
+		break;
+	}
+	p.x = -1; p.y = -1;
+	return p;
 }
 
 int NormalMap::isInMap(float touchPositionX, float touchPositionY)
 {
 	int x, y;
 	x = (int)((touchPositionX - startWidth) / (spaceWidth - 1) + 0.5f);
-	if (x < (m_MapSize + 1) * 0.5)
-		y = (int)((touchPositionY - startHeight + spaceHeight*x*0.5f) / spaceHeight + 0.5f);
+	if (x < (m_MapSize + 1) / 2)
+		y = (int)((touchPositionY - startHeight + spaceHeight* x * 0.5f) / spaceHeight + 0.5f);
 	else
-		y = (int)((touchPositionY - startHeight + spaceHeight*0.5f*(m_MapSize - 1 - x)) / spaceHeight + 0.5f);
-	if (x >= m_MapSize || y >= m_MapSize || x < 0 || y < 0 || !map[x][y]) return -1;
+		y = (int)((touchPositionY - startHeight + spaceHeight* 0.5f * (m_MapSize - 1 - x)) / spaceHeight + 0.5f);
+	if(isInMap(x,y))return -1;
 	Point p = getDropPos(x, y);
 
 	if (abs(touchPositionX - p.x) < map[x][y]->getWidth() * 0.8f
@@ -105,6 +166,7 @@ int NormalMap::isInMap(float touchPositionX, float touchPositionY)
 		return x*m_MapSize + y;
 	return -1;
 }
+
 bool NormalMap::isNear(int x1, int y1, int x2, int y2)
 {
 	auto p1 = getDropPos(x1, y1);
@@ -115,6 +177,7 @@ bool NormalMap::isNear(int x1, int y1, int x2, int y2)
 		return true;
 	return false;
 }
+
 void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 {
 	int temp = isInMap(touchPositionX, touchPositionY);
@@ -205,6 +268,7 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 
 	}
 }
+
 void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 {
 	if (dropsLinked.size() == 1)
@@ -216,16 +280,16 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	}
 	else if (dropsLinked.size() > 1)
 	{
-		//debug-p
-		m_Score += dropsLinked.size();
-		if (isRound)
-			m_Score += dropsLinked.size();
 		AudioManager::playSoundEffect(SoundEffectClear);
 		while (dropsLinked.size() != 0)
 		{
 			int x = dropsLinked.top().x;
 			int y = dropsLinked.top().y;
-			if (map[x][y])map[x][y]->remove();
+			if (map[x][y])
+			{
+				map[x][y]->remove();
+				m_Score++;
+			}
 			map[x][y] = NULL;
 			dropsLinked.pop();
 		}
@@ -239,18 +303,18 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	}
 	if (isRound)
 	{
-		this->clearColor();
+		this->clearColor((Color3B)currentColor);
 		this->dropDown();
 		this->fillMap();
-		isRound = false;
 		touchLine->runAction(Show::create());
 	}
 
+	isRound = false;
 	currentColor = Color4B::WHITE;
 	touchLine->clear();
 }
 
-void NormalMap::clearColor()
+void NormalMap::clearColor(Color3B color)
 {
 	for (int i = 0; i < m_MapSize; i++)
 	{
@@ -258,11 +322,11 @@ void NormalMap::clearColor()
 		{
 			if (map[i][j] == nullptr)continue;
 
-			if ((Color3B)map[i][j]->getColor()==(Color3B)currentColor)
+			if ((Color3B)map[i][j]->getColor() == (Color3B)color)
 			{
 				map[i][j]->remove();
 				map[i][j] = nullptr;
-				m_Score += 2;
+				m_Score ++;
 			}
 		}
 	}
@@ -272,6 +336,7 @@ bool NormalMap::getIsRound()
 {
 	return isRound;
 }
+
 Color4B NormalMap::getCurrentColor()
 {
 	return currentColor;
@@ -280,6 +345,7 @@ Color4B NormalMap::getCurrentColor()
 void NormalMap::clearScore(){
 	m_Score = 0;
 }
+
 int NormalMap::getScore(){
 	return m_Score;
 }
