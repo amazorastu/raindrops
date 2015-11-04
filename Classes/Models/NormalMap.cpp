@@ -1,4 +1,4 @@
-#include "NormalMap.h"
+﻿#include "NormalMap.h"
 
 USING_NS_CC;
 
@@ -158,7 +158,7 @@ int NormalMap::isInMap(float touchPositionX, float touchPositionY)
 		y = (int)((touchPositionY - startHeight + spaceHeight* x * 0.5f) / spaceHeight + 0.5f);
 	else
 		y = (int)((touchPositionY - startHeight + spaceHeight* 0.5f * (m_MapSize - 1 - x)) / spaceHeight + 0.5f);
-	if(isInMap(x,y))return -1;
+	if(!isInMap(x,y))return -1;
 	Point p = getDropPos(x, y);
 
 	if (abs(touchPositionX - p.x) < map[x][y]->getWidth() * 0.8f
@@ -303,7 +303,7 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	}
 	if (isRound)
 	{
-		this->clearColor((Color3B)currentColor);
+		this->clearColor(currentColor);
 		this->dropDown();
 		this->fillMap();
 		touchLine->runAction(Show::create());
@@ -314,7 +314,7 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	touchLine->clear();
 }
 
-void NormalMap::clearColor(Color3B color)
+void NormalMap::clearColor(Color4B color)
 {
 	for (int i = 0; i < m_MapSize; i++)
 	{
@@ -322,7 +322,7 @@ void NormalMap::clearColor(Color3B color)
 		{
 			if (map[i][j] == nullptr)continue;
 
-			if ((Color3B)map[i][j]->getColor() == (Color3B)color)
+			if (map[i][j]->getColor() == color)
 			{
 				map[i][j]->remove();
 				map[i][j] = nullptr;

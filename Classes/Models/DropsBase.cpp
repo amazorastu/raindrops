@@ -1,4 +1,4 @@
-#include "DropsBase.h"
+﻿#include "DropsBase.h"
 
 USING_NS_CC;
 
@@ -91,6 +91,7 @@ cocos2d::Color4B DropsBase::getColor()
 	case 8:
 		return Color4B(0, 115, 8, 180);
 	}
+	return Color4B(0, 0, 0, 0);
 }
 
 void DropsBase::setSelected(bool selected)

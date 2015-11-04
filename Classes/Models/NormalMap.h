@@ -1,7 +1,5 @@
-#pragma once
-
+ï»¿#pragma once
 #include "cocos2d.h"
-
 #include "Models/DropsBase.h"
 #include "Others/Global.h"
 #include "Others/AudioManager.h"
@@ -14,54 +12,52 @@ struct intPoint{
 class NormalMap
 {
 private:
-	const static int m_MapSize=7;
+	const static int m_MapSize = 7;
 	cocos2d::Node* m_ShowNode;
 	DropsBase* map[m_MapSize][m_MapSize];
 	std::stack<intPoint> dropsLinked;
 	std::stack<cocos2d::DrawNode*> linesLinked;
 	cocos2d::DrawNode* touchLine;
-	int m_Score=0;
+	int m_Score = 0;
 	float spaceHeight;
 	float spaceWidth;
 	float startHeight;
 	float startWidth;
-
 	bool isRound = false;
 	cocos2d::Color4B currentColor;
-
 	cocos2d::Action* creatDropAnimation(cocos2d::Point targetPoint, float height);
 public:
 	NormalMap(cocos2d::Node* showNode, float w, float h);
-	//ÓÃÓÚÌî³äµØÍ¼
+	//ç”¨äºå¡«å……åœ°å›¾
 	void fillMap();
-	//»ñµÃÒ»¸öµã(x,y) ·½ÏòdÉÏµÄµã
+	//è·å¾—ä¸€ä¸ªç‚¹(x,y) æ–¹å‘dä¸Šçš„ç‚¹
 	intPoint getDropByDirect(int x, int y, int d);
-	//ÓÃÀ´µ÷ÕûµØÍ¼
+	//ç”¨æ¥è°ƒæ•´åœ°å›¾
 	void dropDown();
-	//»ñÈ¡µØÍ¼ÉÏDropµÄ×ø±ê
+	//è·å–åœ°å›¾ä¸ŠDropçš„åæ ‡
 	cocos2d::Point getDropPos(int x, int y);
-	//»ñµÃ(x,y)µÄµã
+	//è·å¾—(x,y)çš„ç‚¹
 	DropsBase* getDrop(int x, int y);
-	//ÅĞ¶Ïmx£¬myÊÇ·ñÔÚµØÍ¼µÄDropÉÏ£¬Èç¹ûÊÇ£¬·µ»Ø¸ÃDropµÄx,y
-	//Èç¹û²»ÊÇ£¬·µ»Ø-1,-1
+	//åˆ¤æ–­mxï¼Œmyæ˜¯å¦åœ¨åœ°å›¾çš„Dropä¸Šï¼Œå¦‚æœæ˜¯ï¼Œè¿”å›è¯¥Dropçš„x,y
+	//å¦‚æœä¸æ˜¯ï¼Œè¿”å›-1,-1
 	int isInMap(float, float);
-	//ÅĞ¶Ïx£¬yÊÇ·ñÔÚµØÍ¼µÄDropÉÏ
+	//åˆ¤æ–­xï¼Œyæ˜¯å¦åœ¨åœ°å›¾çš„Dropä¸Š
 	bool isInMap(int x, int y);
-	//ÅĞ¶ÏÁ½¸öµãÊÇ·ñ¿ÉÁ¬
+	//åˆ¤æ–­ä¸¤ä¸ªç‚¹æ˜¯å¦å¯è¿
 	bool isNear(int x1, int y1, int x2, int y2);
-	//ÍÏ¶¯ÊÂ¼ş
+	//æ‹–åŠ¨äº‹ä»¶
 	void DragOn(float, float);
-	//Ì§ÆğÊÂ¼ş
+	//æŠ¬èµ·äº‹ä»¶
 	void DragUp(float, float);
-	//»ñµÃ×î´ó¿í¶ÈµÄÒ»°ë
+	//è·å¾—æœ€å¤§å®½åº¦çš„ä¸€åŠ
 	float getHalfMaxWidth();
-	//Çå³ş·ÖÊı
+	//æ¸…æ¥šåˆ†æ•°
 	void clearScore();
-	//»ñµÃ·ÖÊı
+	//è·å¾—åˆ†æ•°
 	int getScore();
-	//»ñµÃÊÇ·ñÊÇ»·Â·
+	//è·å¾—æ˜¯å¦æ˜¯ç¯è·¯
 	bool getIsRound();
-	//Çå³şµ±Ç°ÑÕÉ«µÄµã
-	void clearColor(Color3B color);
+	//æ¸…æ¥šå½“å‰é¢œè‰²çš„ç‚¹
+	void clearColor(cocos2d::Color4B color);
 	cocos2d::Color4B getCurrentColor();
 };
