@@ -60,4 +60,8 @@ public:
 	//清楚当前颜色的点
 	void clearColor(cocos2d::Color4B color);
 	cocos2d::Color4B getCurrentColor();
+	std::stack<intPoint> getCrossLine(int x, int y);
+	std::stack<intPoint> getStandLine(int x, int y);
+	int clearDropStack(std::stack<intPoint> &stack);
+	int NormalMap::addDropStack(std::stack<intPoint> &stack);
 };

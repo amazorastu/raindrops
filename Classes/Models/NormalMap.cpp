@@ -100,7 +100,8 @@ bool NormalMap::isInMap(int x, int y)
 
 intPoint NormalMap::getDropByDirect(int x, int y, int d)
 {
-	intPoint p;p.x = -1;p.y = -1;
+	intPoint p;
+	p.x = -1; p.y = -1;
 	switch (d)
 	{
 	case 1://方向上
@@ -130,21 +131,23 @@ intPoint NormalMap::getDropByDirect(int x, int y, int d)
 		if (!isInMap(p.x, p.y))break;
 		return p;
 	case 5://方向左下
-		if (x < m_MapSize / 2){
+		if (x <= m_MapSize / 2){
 			p.x = x - 1; p.y = y - 1;
 		}
 		else{
 			p.x = x - 1; p.y = y;
 		}
-		break;
+		if (!isInMap(p.x, p.y))break;
+		return p;
 	case 6://方向左上
-		if (x < m_MapSize / 2){
+		if (x <= m_MapSize / 2){
 			p.x = x - 1; p.y = y;
 		}
 		else{
 			p.x = x - 1; p.y = y + 1;
 		}
-		break;
+		if (!isInMap(p.x, p.y))break;
+		return p;
 	}
 	p.x = -1; p.y = -1;
 	return p;
@@ -177,7 +180,61 @@ bool NormalMap::isNear(int x1, int y1, int x2, int y2)
 		return true;
 	return false;
 }
+std::stack<intPoint> NormalMap::getCrossLine(int x, int y)
+{
+	std::stack<intPoint> crossLine;
+	intPoint p;
+	p.x = x; p.y = y;
+	crossLine.push(p);
+	for (;;){
+		p = getDropByDirect(p.x, p.y, 2);
+		if (p.x == -1 || p.y == -1)break;
+		crossLine.push(p);
+	}
+	p.x = x; p.y = y;
+	for (;;){
+		p = getDropByDirect(p.x, p.y, 5);
+		if (p.x == -1 || p.y == -1)break;
+		crossLine.push(p);
+	}
 
+	p.x = x; p.y = y;
+	for (;;){
+		p = getDropByDirect(p.x, p.y, 3);
+		if (p.x == -1 || p.y == -1)break;
+		crossLine.push(p);
+	}
+	p.x = x; p.y = y;
+	for (;;){
+		p = getDropByDirect(p.x, p.y, 6);
+		if (p.x == -1 || p.y == -1)break;
+		crossLine.push(p);
+	}
+	return crossLine;
+}
+std::stack<intPoint> NormalMap::getStandLine(int x, int y)
+{
+	std::stack<intPoint> line;
+	return line;
+}
+int NormalMap::clearDropStack(std::stack<intPoint> &stack){
+	int n = 0;
+	for (; stack.size() != 0; stack.pop())
+	{
+		intPoint p = stack.top();
+		if (map[p.x][p.y])
+		{
+			map[p.x][p.y]->remove();
+			map[p.x][p.y] = nullptr;
+			n++;
+		}
+	}
+	return n;
+}
+void NormalMap::addDropStack(std::stack<intPoint> &stack){
+	for (; stack.size() != 0; stack.pop())
+		this->dropsLinked.push(stack.top());
+}
 void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 {
 	int temp = isInMap(touchPositionX, touchPositionY);
@@ -281,7 +338,7 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	else if (dropsLinked.size() > 1)
 	{
 		AudioManager::playSoundEffect(SoundEffectClear);
-		while (dropsLinked.size() != 0)
+		/*while (dropsLinked.size() != 0)
 		{
 			int x = dropsLinked.top().x;
 			int y = dropsLinked.top().y;
@@ -294,21 +351,25 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 			dropsLinked.pop();
 		}
 		dropDown();
-		fillMap();
+		fillMap();*/
+		intPoint pend = dropsLinked.top();
+		if (isRound)
+			addDropStack(getCrossLine(pend.x, pend.y));
+		m_Score + =this->clearDropStack(dropsLinked);
+		this->dropDown();
+		this->fillMap();
 	}
 	while (linesLinked.size() != 0)
 	{
 		linesLinked.top()->removeFromParentAndCleanup(true);
 		linesLinked.pop();
 	}
-	if (isRound)
-	{
-		this->clearColor(currentColor);
-		this->dropDown();
-		this->fillMap();
+	if (isRound){
+		//this->clearColor(currentColor);
 		touchLine->runAction(Show::create());
 	}
-
+	dropDown();
+	fillMap();
 	isRound = false;
 	currentColor = Color4B::WHITE;
 	touchLine->clear();
