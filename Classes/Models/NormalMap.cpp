@@ -355,7 +355,7 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 		intPoint pend = dropsLinked.top();
 		if (isRound)
 			addDropStack(getCrossLine(pend.x, pend.y));
-		m_Score + =this->clearDropStack(dropsLinked);
+		m_Score +=clearDropStack(dropsLinked);
 		this->dropDown();
 		this->fillMap();
 	}
