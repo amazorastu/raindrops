@@ -4,6 +4,11 @@
 
 #include "Others/Global.h"
 
+struct intPoint{
+	int x;
+	int y;
+};
+
 class DropsBase
 {
 public:

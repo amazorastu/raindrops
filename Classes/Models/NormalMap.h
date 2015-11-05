@@ -4,11 +4,6 @@
 #include "Others/Global.h"
 #include "Others/AudioManager.h"
 
-struct intPoint{
-	int x;
-	int y;
-};
-
 class NormalMap
 {
 private:

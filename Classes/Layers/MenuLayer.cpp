@@ -153,7 +153,15 @@ void MenuLayer::buttonCallback(Ref *ref)
 					TransitionCrossFade::create(0.1f, GameLayer::createScene())); }
 		),nullptr)); 
 	}
-	else if (b == button[1]){}
+	else if (b == button[1])
+	{
+		this->runAction(
+			Sequence::create(DelayTime::create(0.5f),
+			CallFunc::create([&]{
+			Director::getInstance()->pushScene(
+				TransitionCrossFade::create(0.1f, RelaxLayer::createScene())); }
+		), nullptr));
+	}
 	else if (b == button[2]){}
 	else if (b == button[3]){}
 

@@ -23,9 +23,11 @@ Label* TextBase::createText(TextType textType)
 			lb->setString("商店");
 			break;
 		case textTypeHome:
+			lb->enableOutline(Color4B::WHITE, 3.0f);
 			lb->setString("菜单");
 			break;
 		case textTypeContinue:
+			lb->enableOutline(Color4B::WHITE, 3.0f);
 			lb->setString("继续");
 			break;
 		default:
@@ -49,9 +51,11 @@ Label* TextBase::createText(TextType textType)
 			lb->setString("Shop");
 			break;
 		case textTypeHome:
+			lb->enableOutline(Color4B::WHITE, 3.0f);
 			lb->setString("Home");
 			break;
 		case textTypeContinue:
+			lb->enableOutline(Color4B::WHITE, 3.0f);
 			lb->setString("Continue");
 			break;
 		default:
