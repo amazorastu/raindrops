@@ -124,20 +124,20 @@
             <key>Rune0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2003,2},{47,43}}</string>
+                <string>{{55,1454},{45,51}}</string>
                 <key>offset</key>
-                <string>{0,4}</string>
+                <string>{-1,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{14,12},{47,43}}</string>
+                <string>{{14,12},{45,51}}</string>
                 <key>sourceSize</key>
                 <string>{75,75}</string>
             </dict>
             <key>Rune1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2003,157},{35,35}}</string>
+                <string>{{2003,108},{35,35}}</string>
                 <key>offset</key>
                 <string>{11,9}</string>
                 <key>rotated</key>
@@ -150,7 +150,7 @@
             <key>Rune2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2003,194},{15,53}}</string>
+                <string>{{2003,145},{15,53}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -163,7 +163,7 @@
             <key>Rune3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2003,104},{51,37}}</string>
+                <string>{{2003,55},{51,37}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -176,7 +176,7 @@
             <key>Rune4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2003,51},{51,37}}</string>
+                <string>{{2003,2},{51,37}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -209,7 +209,7 @@
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:73ff59fa11cdafcd069a8f9894c1a549:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:70eba4a28fffe894d1df4bce9ea04023:1/1$</string>
             <key>textureFileName</key>
             <string>texture.png</string>
         </dict>
