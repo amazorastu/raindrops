@@ -28,6 +28,7 @@ public:
 	void update(float);
 	virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event * pEvent);
 
+	void addTime(int Time);
 
 private:
 	virtual void onEnterTransitionDidFinish();

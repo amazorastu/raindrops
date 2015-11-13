@@ -1,5 +1,5 @@
 ﻿#include "NormalMap.h"
-
+#include "Layers\GameLayer.h"
 USING_NS_CC;
 
 Action* NormalMap::creatDropAnimation(Point targetPoint, float height)
@@ -106,7 +106,7 @@ intPoint NormalMap::getDropByDirect(int x, int y, int d)
 	{
 	case 1://方向上
 		p.x = x; p.y = y + 1;
-		if (!isInMap(p.x,p.y))break;
+		if (!isInMap(p.x, p.y))break;
 		return p;
 	case 2://方向右上
 		if (x < m_MapSize / 2){
@@ -161,7 +161,7 @@ int NormalMap::isInMap(float touchPositionX, float touchPositionY)
 		y = (int)((touchPositionY - startHeight + spaceHeight* x * 0.5f) / spaceHeight + 0.5f);
 	else
 		y = (int)((touchPositionY - startHeight + spaceHeight* 0.5f * (m_MapSize - 1 - x)) / spaceHeight + 0.5f);
-	if(!isInMap(x,y))return -1;
+	if (!isInMap(x, y))return -1;
 	Point p = getDropPos(x, y);
 
 	if (abs(touchPositionX - p.x) < map[x][y]->getWidth() * 0.8f
@@ -212,29 +212,188 @@ std::stack<intPoint> NormalMap::getCrossLine(int x, int y)
 	}
 	return crossLine;
 }
-std::stack<intPoint> NormalMap::getStandLine(int x, int y)
+void NormalMap::clearRune(int x, int y)
 {
-	std::stack<intPoint> line;
-	return line;
-}
-int NormalMap::clearDropStack(std::stack<intPoint> &stack){
-	int n = 0;
-	for (; stack.size() != 0; stack.pop())
+	intPoint p;
+	switch (map[x][y]->getRune())
 	{
-		intPoint p = stack.top();
-		if (map[p.x][p.y])
+	case 0:
+		for (int i = 1; i < 7; i++)
 		{
-			map[p.x][p.y]->remove();
-			map[p.x][p.y] = nullptr;
-			n++;
+			p = getDropByDirect(x, y, i);
+			if (p.x == -1 || p.y == -1)continue;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		break;
+	case 1:
+		((GameLayer*)m_ShowNode)->addTime(600);
+		break;
+	case 2:
+		p.x = x; p.y = 0;
+		if (!map[p.x][p.y]->getSelected())
+		{
+			map[p.x][p.y]->setSelected(true);
+			if (map[p.x][p.y]->getRune() != -1)
+				clearRune(p.x, p.y);
+		}
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 1);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		break;
+	case 3:
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 2);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 5);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		break;
+	case 4:
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 3);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 6);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		break;
+	case 5:
+		p.x = x; p.y = 0;
+		if (!map[p.x][p.y]->getSelected())
+		{
+			map[p.x][p.y]->setSelected(true);
+			if (map[p.x][p.y]->getRune() != -1)
+				clearRune(p.x, p.y);
+		}
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 1);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 3);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 6);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 2);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		p.x = x; p.y = y;
+		for (;;){
+			p = getDropByDirect(p.x, p.y, 5);
+			if (p.x == -1 || p.y == -1)break;
+			if (!map[p.x][p.y]->getSelected())
+			{
+				map[p.x][p.y]->setSelected(true);
+				if (map[p.x][p.y]->getRune() != -1)
+					clearRune(p.x, p.y);
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+int NormalMap::clearSelectDrops()
+{
+	intPoint p;
+	while (dropsLinked.size() != 0)
+	{
+		p = dropsLinked.top();
+		if (map[p.x][p.y] && map[p.x][p.y]->getRune() >= 0)
+			clearRune(p.x, p.y);
+		dropsLinked.pop();
+	}
+
+	int n = 0;
+	for (int i = 0; i < m_MapSize; i++)
+	{
+		for (int j = 0; j < ((i < (m_MapSize + 1) * 0.5) ? i + (m_MapSize + 1) * 0.5 : m_MapSize - 1 - i + (m_MapSize + 1) * 0.5); j++)
+		{
+			if (map[i][j] && map[i][j]->getSelected())
+			{
+				map[i][j]->remove();
+				map[i][j] = nullptr;
+				n++;
+			}
 		}
 	}
 	return n;
 }
-void NormalMap::addDropStack(std::stack<intPoint> &stack){
-	for (; stack.size() != 0; stack.pop())
-		this->dropsLinked.push(stack.top());
-}
+
 void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 {
 	int temp = isInMap(touchPositionX, touchPositionY);
@@ -328,6 +487,7 @@ void NormalMap::DragOn(float touchPositionX, float touchPositionY)
 
 void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 {
+	int addScore = 0;
 	if (dropsLinked.size() == 1)
 	{
 		if (map[dropsLinked.top().x][dropsLinked.top().y])
@@ -338,24 +498,9 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 	else if (dropsLinked.size() > 1)
 	{
 		AudioManager::playSoundEffect(SoundEffectClear);
-		/*while (dropsLinked.size() != 0)
-		{
-			int x = dropsLinked.top().x;
-			int y = dropsLinked.top().y;
-			if (map[x][y])
-			{
-				map[x][y]->remove();
-				m_Score++;
-			}
-			map[x][y] = NULL;
-			dropsLinked.pop();
-		}
-		dropDown();
-		fillMap();*/
-		intPoint pend = dropsLinked.top();
-		if (isRound)
-			addDropStack(getCrossLine(pend.x, pend.y));
-		m_Score +=clearDropStack(dropsLinked);
+		if (isRound);
+		addScore = clearSelectDrops();
+		m_Score += addScore;
 		this->dropDown();
 		this->fillMap();
 	}
@@ -364,17 +509,33 @@ void NormalMap::DragUp(float touchPositionX, float touchPositionY)
 		linesLinked.top()->removeFromParentAndCleanup(true);
 		linesLinked.pop();
 	}
+	if (addScore > 4)randomRune();
 	if (isRound){
 		//this->clearColor(currentColor);
+		randomRune();
 		touchLine->runAction(Show::create());
 	}
-	dropDown();
-	fillMap();
 	isRound = false;
 	currentColor = Color4B::WHITE;
 	touchLine->clear();
 }
-
+void NormalMap::randomRune()
+{
+	int k = 0;
+	for (;;)
+	{
+		int x = random(0, 6);
+		int y = random(0,
+			(int)((x < (m_MapSize + 1) * 0.5f) ?
+			x + (m_MapSize + 1) * 0.5f :
+			m_MapSize - 1 - x + (m_MapSize + 1) * 0.5f) - 1);
+		if(map[x][y]->addRune(random(0, 5)))break;
+		if (k>10)break;
+		k++;
+	}
+	
+	//while (!map[x][y]->addRune(random(0, 5)));
+}
 void NormalMap::clearColor(Color4B color)
 {
 	for (int i = 0; i < m_MapSize; i++)
@@ -387,7 +548,7 @@ void NormalMap::clearColor(Color4B color)
 			{
 				map[i][j]->remove();
 				map[i][j] = nullptr;
-				m_Score ++;
+				m_Score++;
 			}
 		}
 	}

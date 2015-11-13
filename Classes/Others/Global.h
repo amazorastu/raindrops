@@ -19,7 +19,7 @@ public:
 	static float getWinSizeHalfY();
 	static cocos2d::LanguageType getLanguage();
 	static std::string getDropRes(int tag);
-
+	static std::string getRuneRes(int rune);
 
 private:
 	static cocos2d::Size winSize;

@@ -128,6 +128,11 @@ void GameLayer::setTimeAsLife(int time)
 	isTimerOn = true;
 }
 
+void GameLayer::addTime(int Time)
+{
+	life += Time;
+}
+
 void GameLayer::setMovesAsLife(int moves)
 {
 	life = moves;

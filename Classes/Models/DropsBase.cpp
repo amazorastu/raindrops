@@ -7,9 +7,23 @@ DropsBase::DropsBase()
 	m_CoreSprite = NULL;
 	m_BoarderSprite = NULL;
 	m_Selected = false;
+	m_Rune = -1;
 }
 DropsBase::~DropsBase(){}
-
+bool DropsBase::addRune(int rune)
+{
+	if (m_Rune != -1)return false;
+	m_Rune = rune;
+	auto sprite = Sprite::createWithSpriteFrameName(Global::getRuneRes(rune));
+	Color3B newColor = (Color3B)getColor();
+	newColor.r = 255 - newColor.r;
+	newColor.g = 255 - newColor.g;
+	newColor.b = 255 - newColor.b;
+	sprite->setColor(newColor);
+	m_CoreSprite->addChild(sprite);
+	sprite->setPosition(m_CoreSprite->getContentSize().width / 2, m_CoreSprite->getContentSize().height / 2);
+	return true;
+}
 void DropsBase::remove()
 {
 	m_CoreSprite->runAction(

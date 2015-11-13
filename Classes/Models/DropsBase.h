@@ -42,8 +42,11 @@ public:
 
 	bool getSelected();
 
+	bool addRune(int rune);
+	
+	int getRune(){ return m_Rune; }
 private:
-	int m_Type;
+	int m_Type,m_Rune;
 	bool m_Selected;
 	cocos2d::Sprite* m_BoarderSprite;
 	cocos2d::Sprite* m_CoreSprite;

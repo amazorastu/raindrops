@@ -14,7 +14,11 @@ Global::Global()
 {
 
 }
-
+std::string Global::getRuneRes(int rune){
+	cocos2d::String a;
+	a.appendWithFormat("Rune%d.png", rune);
+	return a._string;
+}
 void Global::init()
 {
 	winSize = Director::getInstance()->getWinSize();
