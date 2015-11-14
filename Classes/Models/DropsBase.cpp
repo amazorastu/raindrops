@@ -15,13 +15,19 @@ bool DropsBase::addRune(int rune)
 	if (m_Rune != -1)return false;
 	m_Rune = rune;
 	auto sprite = Sprite::createWithSpriteFrameName(Global::getRuneRes(rune));
-	Color3B newColor = (Color3B)getColor();
-	newColor.r = 255 - newColor.r;
-	newColor.g = 255 - newColor.g;
-	newColor.b = 255 - newColor.b;
-	sprite->setColor(newColor);
+	//Color3B newColor = (Color3B)getColor();
+	//newColor.r = 255 - newColor.r;
+	//newColor.g = 255 - newColor.g;
+	//newColor.b = 255 - newColor.b;
+	//sprite->setColor(newColor);
+	//sprite->setOpacity(180);
+	sprite->setColor((Color3B)getColor());
 	m_CoreSprite->addChild(sprite);
 	sprite->setPosition(m_CoreSprite->getContentSize().width / 2, m_CoreSprite->getContentSize().height / 2);
+	sprite->runAction(
+			RepeatForever::create(
+			Sequence::create(ScaleTo::create(0.3f, 1.2f), ScaleTo::create(0.3f, 0.8f), NULL)));
+	
 	return true;
 }
 void DropsBase::remove()
