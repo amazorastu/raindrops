@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		director->setOpenGLView(glview);
 	}
 	glview->setDesignResolutionSize(2048.0f*director->getWinSize().width / director->getWinSize().height, 2048.0f, ResolutionPolicy::SHOW_ALL);
-	CCLOG("[Pruto]%f,%f", director->getVisibleSize().width, director->getVisibleSize().height);
+	log("[Pruto]%f,%f", director->getVisibleSize().width, director->getVisibleSize().height);
 
 	// turn on display FPS
 	director->setDisplayStats(true);

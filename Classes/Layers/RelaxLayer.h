@@ -5,6 +5,7 @@
 #include "Others/Global.h"
 #include "Layers/MenuLayer.h"
 #include "Models/RelaxMap.h"
+#include "Models/DialogBase.h"
 
 class RelaxLayer : public cocos2d::LayerColor
 {
@@ -51,6 +52,7 @@ private:
 
 	void showDialog();
 	void hideDialog();
+	void showGameOver();
 	cocos2d::LayerColor *dialog;
 
 	cocos2d::Sprite *dockUp;

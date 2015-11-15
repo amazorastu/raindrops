@@ -191,8 +191,8 @@ void GameLayer::update(float dt)
 
 	if (lifeShown == 0)
 	{
-		this->unscheduleUpdate();
-		Director::getInstance()->popScene();
+		this->showGameOver();
+		//Director::getInstance()->popScene();
 		//this->unschedule(SEL_SCHEDULE(&GameLayer::update));
 		//todo
 	}
@@ -272,6 +272,14 @@ void GameLayer::buttonCallback(Ref* ref)
 	default:
 		break;
 	}
+}
+
+void GameLayer::showGameOver()
+{
+	this->unscheduleUpdate();
+	dispatcher->removeEventListener(eventTouch);
+	isPaused = true;
+	this->addChild(DialogBase::createDialog(gameTypeChallenge, dialogTypeGameOver, score),8);
 }
 
 void GameLayer::setScore(int para)

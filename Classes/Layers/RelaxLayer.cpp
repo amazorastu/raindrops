@@ -186,8 +186,8 @@ void RelaxLayer::update(float dt)
 
 	if (lifeShown == 0)
 	{
-		this->unscheduleUpdate();
-		Director::getInstance()->popScene();
+		this->showGameOver();
+		//Director::getInstance()->popScene();
 		//this->unschedule(SEL_SCHEDULE(&RelaxLayer::update));
 		//todo
 	}
@@ -248,6 +248,14 @@ void RelaxLayer::hideDialog()
 	this->addButtonEvents();
 
 	this->removeChild(dialog, true);
+}
+
+void RelaxLayer::showGameOver()
+{
+	this->unscheduleUpdate();
+	dispatcher->removeEventListener(eventTouch);
+	isPaused = true;
+	this->addChild(DialogBase::createDialog(gameTypeRelax, dialogTypeGameOver, score), 8);
 }
 
 void RelaxLayer::buttonCallback(Ref* ref)

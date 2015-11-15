@@ -30,6 +30,12 @@ Label* TextBase::createText(TextType textType)
 			lb->enableOutline(Color4B::WHITE, 3.0f);
 			lb->setString("继续");
 			break;
+		case textTypeChallengeMode:
+			lb->setString("挑战");
+			break;
+		case textTypeRelaxMode:
+			lb->setString("休闲");
+			break;
 		default:
 			break;
 		}
@@ -57,6 +63,12 @@ Label* TextBase::createText(TextType textType)
 		case textTypeContinue:
 			lb->enableOutline(Color4B::WHITE, 3.0f);
 			lb->setString("Continue");
+			break;
+		case textTypeChallengeMode:
+			lb->setString("Challenge Mode");
+			break;
+		case textTypeRelaxMode:
+			lb->setString("Relax Mode");
 			break;
 		default:
 			break;

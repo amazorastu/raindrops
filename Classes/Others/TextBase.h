@@ -11,7 +11,9 @@ enum TextType
 	textTypeAchievement = 3,
 	textTypeShop = 4,
 	textTypeHome = 5,
-	textTypeContinue = 6
+	textTypeContinue = 6,
+	textTypeChallengeMode = 7,
+	textTypeRelaxMode = 8,
 };
 
 
