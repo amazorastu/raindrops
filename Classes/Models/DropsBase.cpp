@@ -21,12 +21,16 @@ bool DropsBase::addRune(int rune)
 	//newColor.b = 255 - newColor.b;
 	//sprite->setColor(newColor);
 	//sprite->setOpacity(180);
-	sprite->setColor((Color3B)getColor());
+	//sprite->setColor((Color3B)getColor());
+	sprite->setColor(Color3B(0,0,0));
+	sprite->setScale(3.0f);
+	sprite->setOpacity(128.0f);
+	sprite->runAction(ScaleTo::create(0.8f,1.0f));
 	m_CoreSprite->addChild(sprite);
 	sprite->setPosition(m_CoreSprite->getContentSize().width / 2, m_CoreSprite->getContentSize().height / 2);
 	sprite->runAction(
 			RepeatForever::create(
-			Sequence::create(ScaleTo::create(0.3f, 1.2f), ScaleTo::create(0.3f, 0.8f), NULL)));
+			Sequence::create(FadeTo::create(0.3f,64.0f), FadeTo::create(0.45f,192.0f), NULL)));
 	
 	return true;
 }

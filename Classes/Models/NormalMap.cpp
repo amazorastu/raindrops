@@ -1,5 +1,5 @@
 ﻿#include "NormalMap.h"
-#include "Layers\GameLayer.h"
+#include "Layers/GameLayer.h"
 USING_NS_CC;
 
 Action* NormalMap::creatDropAnimation(Point targetPoint, float height)
@@ -231,7 +231,7 @@ void NormalMap::clearRune(int x, int y)
 		}
 		break;
 	case 1:
-		((GameLayer*)m_ShowNode)->addTime(600);
+		((GameLayer*)m_ShowNode)->addTime(180);
 		break;
 	case 2:
 		p.x = x; p.y = 0;

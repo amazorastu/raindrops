@@ -56,7 +56,24 @@ bool RelaxLayer::init()
 	this->addChild(background);
 
 	
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("Pause.png");
+	auto pause = MenuItemImage::create("", "", CC_CALLBACK_1(GameLayer::buttonCallback, this));
+	pause->setScale(0.5f);
+	pause->setNormalSpriteFrame(frame);
+	pause->setSelectedSpriteFrame(frame);
+	pause->setTag(3);
+	pause->setPosition(Global::getWinSizeX() - 50.0f, Global::getWinSizeY() - 50.0f);
+	pause->setAnchorPoint(Vec2(1.0f, 1.0f));
 
+	auto menu = Menu::create(pause, nullptr);
+	menu->setPosition(0.0f, 0.0f);
+	this->addChild(menu, 5);
+
+	scoreLabel->setPosition(dockUp->getContentSize().width*0.5f + Global::getWinSizeX()*0.10f, dockUp->getContentSize().height*0.5f);
+	lifeLabel->setPosition(dockUp->getContentSize().width*0.5f - Global::getWinSizeX()*0.3f, dockUp->getContentSize().height*0.5f);
+
+#endif
 
 
 
