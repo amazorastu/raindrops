@@ -3,7 +3,7 @@
 USING_NS_CC;
 
 RelaxLayer::RelaxLayer() : score(0), life(0), scoreShown(0), lifeShown(0), isTimerOn(false), isTouched(false),
-isPaused(false)
+isPaused(false), isGameOver(false)
 {
 
 }
@@ -86,7 +86,7 @@ void RelaxLayer::onEnterTransitionDidFinish()
 	LayerColor::onEnterTransitionDidFinish();
 	dockUp->runAction(MoveBy::create(0.15f, Vec2(0.0f, -200.0f)));
 	dockDown->runAction(MoveBy::create(0.15f, Vec2(0.0f, 200.0f)));
-	this->setTimeAsLife(3600);
+	this->setTimeAsLife(60);
 	//this->setMovesAsLife(30);
 
 	
@@ -254,7 +254,7 @@ void RelaxLayer::showGameOver()
 {
 	this->unscheduleUpdate();
 	dispatcher->removeEventListener(eventTouch);
-	isPaused = true;
+	isGameOver = true;
 	this->addChild(DialogBase::createDialog(gameTypeRelax, dialogTypeGameOver, score), 8);
 }
 
@@ -296,6 +296,10 @@ void RelaxLayer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * pEvent)
 {
 	if (keyCode == EventKeyboard::KeyCode::KEY_BACK)
 	{
+		if (isGameOver)
+		{
+			Director::getInstance()->popScene();
+		}
 		/*this->runAction(
 			Sequence::create(DelayTime::create(0.3f),
 			CallFunc::create([&]{

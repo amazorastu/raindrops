@@ -3,7 +3,7 @@
 USING_NS_CC;
 
 GameLayer::GameLayer() : score(0), life(0), scoreShown(0), lifeShown(0), isTimerOn(false), isTouched(false),
-isPaused(false)
+isPaused(false), isGameOver(false)
 {
 
 }
@@ -278,7 +278,7 @@ void GameLayer::showGameOver()
 {
 	this->unscheduleUpdate();
 	dispatcher->removeEventListener(eventTouch);
-	isPaused = true;
+	isGameOver = true;
 	this->addChild(DialogBase::createDialog(gameTypeChallenge, dialogTypeGameOver, score),8);
 }
 
@@ -303,6 +303,10 @@ void GameLayer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * pEvent)
 {
 	if (keyCode == EventKeyboard::KeyCode::KEY_BACK)
 	{
+		if (isGameOver)
+		{
+			Director::getInstance()->popScene();
+		}
 		/*this->runAction(
 			Sequence::create(DelayTime::create(0.3f),
 			CallFunc::create([&]{

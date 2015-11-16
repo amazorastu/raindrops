@@ -1,8 +1,10 @@
 #pragma once
 
 #include "cocos2d.h"
+
 #include "Others/Global.h"
 #include "Others/TextBase.h"
+#include "Others/User.h"
 
 enum GameType
 {

@@ -14,6 +14,7 @@ enum TextType
 	textTypeContinue = 6,
 	textTypeChallengeMode = 7,
 	textTypeRelaxMode = 8,
+	textTypeBack = 9
 };
 
 

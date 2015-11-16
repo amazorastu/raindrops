@@ -30,6 +30,29 @@ bool LoadingLayer::init()
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("texture/texture.plist");
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("drops/default/drops.plist");
 
+	if (!UserDefault::getInstance()->getIntegerForKey("challengeScore0"))
+		UserDefault::getInstance()->setIntegerForKey("challengeScore0", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("challengeScore1"))
+		UserDefault::getInstance()->setIntegerForKey("challengeScore1", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("challengeScore2"))
+		UserDefault::getInstance()->setIntegerForKey("challengeScore2", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("challengeScore3"))
+		UserDefault::getInstance()->setIntegerForKey("challengeScore3", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("challengeScore4"))
+		UserDefault::getInstance()->setIntegerForKey("challengeScore4", 0);
+
+	if (!UserDefault::getInstance()->getIntegerForKey("relaxScore0"))
+		UserDefault::getInstance()->setIntegerForKey("relaxScore0", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("relaxScore1"))
+		UserDefault::getInstance()->setIntegerForKey("relaxScore1", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("relaxScore2"))
+		UserDefault::getInstance()->setIntegerForKey("relaxScore2", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("relaxScore3"))
+		UserDefault::getInstance()->setIntegerForKey("relaxScore3", 0);
+	if (!UserDefault::getInstance()->getIntegerForKey("relaxScore4"))
+		UserDefault::getInstance()->setIntegerForKey("relaxScore4", 0);
+
+
 	Global::init();
 
 	

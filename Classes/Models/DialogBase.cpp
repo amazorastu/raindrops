@@ -18,6 +18,8 @@ bool DialogBase::init()
 		return false;
 	}
 
+	this->setColor(Color3B(255, 225, 200));
+
 	scoreLabel = Label::createWithTTF("0", "fonts/arial.ttf", 400.0f);
 	scoreLabel->setPosition(this->getContentSize().width*0.5f, Global::getWinSizeY()*0.75f);
 	scoreLabel->setTextColor(Color4B(0, 0, 0, 255));
@@ -66,6 +68,10 @@ DialogBase* DialogBase::createDialog(GameType gameType, DialogType dialogType, i
 		label->setPosition(dialog->getContentSize().width*0.5f, Global::getWinSizeY()*0.65f);
 		dialog->addChild(label);
 	}
+
+	auto labelBack = TextBase::createText(textTypeBack);
+	labelBack->setPosition(dialog->getContentSize().width*0.5f, Global::getWinSizeY()*0.25f - 190.0f);
+	dialog->addChild(labelBack);
 
 
 	return dialog;

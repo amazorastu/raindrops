@@ -50,6 +50,7 @@ private:
 	bool isPaused;
 	bool isTouched;
 	bool isTimerOn;
+	bool isGameOver;
 
 	void showDialog();
 	void hideDialog();

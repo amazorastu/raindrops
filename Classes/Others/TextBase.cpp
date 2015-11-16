@@ -31,10 +31,13 @@ Label* TextBase::createText(TextType textType)
 			lb->setString("继续");
 			break;
 		case textTypeChallengeMode:
-			lb->setString("挑战");
+			lb->setString("挑战模式");
 			break;
 		case textTypeRelaxMode:
-			lb->setString("休闲");
+			lb->setString("休闲模式");
+			break;
+		case textTypeBack:
+			lb->setString("返回菜单");
 			break;
 		default:
 			break;
@@ -69,6 +72,9 @@ Label* TextBase::createText(TextType textType)
 			break;
 		case textTypeRelaxMode:
 			lb->setString("Relax Mode");
+			break;
+		case textTypeBack:
+			lb->setString("Back to menu");
 			break;
 		default:
 			break;
