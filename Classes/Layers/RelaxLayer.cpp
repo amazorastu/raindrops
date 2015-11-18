@@ -86,7 +86,7 @@ void RelaxLayer::onEnterTransitionDidFinish()
 	LayerColor::onEnterTransitionDidFinish();
 	dockUp->runAction(MoveBy::create(0.15f, Vec2(0.0f, -200.0f)));
 	dockDown->runAction(MoveBy::create(0.15f, Vec2(0.0f, 200.0f)));
-	this->setTimeAsLife(60);
+	this->setTimeAsLife(3600);
 	//this->setMovesAsLife(30);
 
 	

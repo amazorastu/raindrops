@@ -56,9 +56,11 @@ DialogBase* DialogBase::createDialog(GameType gameType, DialogType dialogType, i
 	{
 	case gameTypeChallenge:
 		label = TextBase::createText(textTypeChallengeMode);
+		User::getInstance()->saveHighScoreForChallengeMode(pScore);
 		break;
 	case gameTypeRelax:
 		label = TextBase::createText(textTypeRelaxMode);
+		User::getInstance()->saveHighScoreForRelaxMode(pScore);
 		break;
 	default:
 		break;

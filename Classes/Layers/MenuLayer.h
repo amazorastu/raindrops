@@ -6,6 +6,7 @@
 #include "Others/TextBase.h"
 #include "Layers/GameLayer.h"
 #include "Layers/RelaxLayer.h"
+#include "Layers/AchievementLayer.h"
 
 class MenuLayer : public cocos2d::LayerColor
 {
